@@ -16,6 +16,7 @@ import java.lang.reflect.Array;
 
 import me.jfenn.timedatepickers.R;
 import me.jfenn.timedatepickers.utils.ConversionUtils;
+import me.jfenn.timedatepickers.utils.NumberUtils;
 
 public abstract class LinearPickerView<T extends Object> extends View implements GestureDetector.OnGestureListener, View.OnTouchListener {
 
@@ -263,15 +264,6 @@ public abstract class LinearPickerView<T extends Object> extends View implements
         return max;
     }
 
-    private boolean containsInt(int[] ints, int i) {
-        for (int iter : ints) {
-            if (iter == i)
-                return true;
-        }
-
-        return false;
-    }
-
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
@@ -306,7 +298,7 @@ public abstract class LinearPickerView<T extends Object> extends View implements
         canvas.drawRect((canvas.getWidth() / 2) - (itemWidth / 2) - dp[1], startY, (canvas.getWidth() / 2) + (itemWidth / 2) + dp[1], endY, lineAccentPaint);
 
         for (int col = 0; col < items[row].length; col++) {
-            Float xPos = getSafeFloat((canvas.getWidth() / 2) + ((col - actualPositions[row]) * (itemWidth + dp[1])), (itemWidth + dp[1]) * items[row].length, canvas.getWidth());
+            Float xPos = NumberUtils.getSafeFloat((canvas.getWidth() / 2) + ((col - actualPositions[row]) * (itemWidth + dp[1])), (itemWidth + dp[1]) * items[row].length, canvas.getWidth());
             if (xPos != null) {
                 if (selectedPositions[row] == col) {
                     textSecondaryPaint.setColor(colorAccent);
@@ -335,18 +327,6 @@ public abstract class LinearPickerView<T extends Object> extends View implements
         return false;
     }
 
-    @Nullable
-    private Float getSafeFloat(float n, int interval, int width) {
-        if (n < 0) {
-            n %= interval;
-            n += interval;
-            return n <= width ? n : null;
-        } else if (n > width) {
-            n %= interval;
-            return n <= width ? n : null;
-        } else return n;
-    }
-
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
         setMeasuredDimension(MeasureSpec.getSize(widthMeasureSpec), MeasureSpec.getMode(heightMeasureSpec) == MeasureSpec.EXACTLY
@@ -366,7 +346,7 @@ public abstract class LinearPickerView<T extends Object> extends View implements
     @Override
     public boolean onSingleTapUp(MotionEvent e) {
         int row = (int) (e.getY() / (getHeight() / items.length));
-        Float nextPosition = getSafeFloat(actualPositions[row] + ((e.getX() - (getWidth() / 2)) / itemWidth), items[row].length, items[row].length);
+        Float nextPosition = NumberUtils.getSafeFloat(actualPositions[row] + ((e.getX() - (getWidth() / 2)) / itemWidth), items[row].length, items[row].length);
         if (nextPosition != null) {
             selectedPositions[row] = Math.round(nextPosition);
             actualPositions[row] = selectedPositions[row] - ((e.getX() - (getWidth() / 2)) / itemWidth);
@@ -384,7 +364,7 @@ public abstract class LinearPickerView<T extends Object> extends View implements
     @Override
     public boolean onScroll(MotionEvent e1, MotionEvent e2, float distanceX, float distanceY) {
         int row = (int) (e1.getY() / (getHeight() / items.length));
-        Float nextPosition = getSafeFloat(actualPositions[row] + (distanceX / itemWidth), items[row].length, items[row].length);
+        Float nextPosition = NumberUtils.getSafeFloat(actualPositions[row] + (distanceX / itemWidth), items[row].length, items[row].length);
         if (nextPosition != null) {
             actualPositions[row] = nextPosition;
             selectedPositions[row] = Math.round(nextPosition);
