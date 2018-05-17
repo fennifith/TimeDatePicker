@@ -82,6 +82,12 @@ public class LinearDatePickerView extends LinearPickerView<Object> {
         return getSelectedIndex(0) + 1;
     }
 
+    public void setDate(int year, int month, int day) {
+        setSelectedIndex(0, year - yearStart);
+        setSelectedIndex(1, month);
+        setSelectedIndex(2, day - 1);
+    }
+
     public interface OnDateChangedListener {
         void onDateChanged(int year, int month, int day);
     }
