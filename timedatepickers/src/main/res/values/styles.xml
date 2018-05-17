@@ -10,6 +10,12 @@
         <item name="android:backgroundDimEnabled">true</item>
         <item name="android:windowMinWidthMajor">100%</item>
         <item name="android:windowMinWidthMinor">100%</item>
+        <item name="android:windowAnimationStyle">@style/TimeDatePickers.Dialog.BottomSheet.SlideAnimation</item>
+    </style>
+
+    <style name="TimeDatePickers.Dialog.BottomSheet.SlideAnimation">
+        <item name="android:windowEnterAnimation">@anim/timedatepickers_sheet_in</item>
+        <item name="android:windowExitAnimation">@anim/timedatepickers_sheet_out</item>
     </style>
 
 </resources>

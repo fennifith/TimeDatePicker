@@ -10,7 +10,6 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:background="@color/timedatepicker_colorBackgroundPrimary"
-        android:elevation="8dp"
         android:layout_gravity="bottom">
 
         <LinearLayout
@@ -18,7 +17,10 @@
             android:layout_height="wrap_content"
             android:gravity="end"
             android:orientation="horizontal"
-            android:padding="16dp">
+            android:paddingLeft="16dp"
+            android:paddingRight="16dp"
+            android:paddingTop="8dp"
+            android:paddingBottom="16dp">
 
             <TextView
                 android:id="@+id/cancel"

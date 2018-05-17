@@ -302,7 +302,7 @@ public abstract class LinearPickerView<T extends Object> extends View implements
                     canvas,
                     row,
                     labels[row],
-                    row % 2 == 0 ? backgroundPrimaryPaint : backgroundSecondaryPaint,
+                    (row + 1) % 2 == 0 ? backgroundPrimaryPaint : backgroundSecondaryPaint,
                     itemWidth,
                     row * itemHeight,
                     (row + 1) * itemHeight
