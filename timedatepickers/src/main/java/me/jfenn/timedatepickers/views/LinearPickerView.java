@@ -421,6 +421,7 @@ public abstract class LinearPickerView<T extends Object> extends View implements
         if (event.getAction() == MotionEvent.ACTION_UP || event.getAction() == MotionEvent.ACTION_CANCEL) {
             scrollTriggered = false;
             onPositionsChanged(selectedPositions);
+            postInvalidate();
         }
 
         return false;
