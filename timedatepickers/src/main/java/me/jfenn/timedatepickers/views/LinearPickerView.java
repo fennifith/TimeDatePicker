@@ -364,7 +364,11 @@ public abstract class LinearPickerView<T extends Object> extends View implements
     @Override
     public boolean onScroll(MotionEvent e1, MotionEvent e2, float distanceX, float distanceY) {
         int row = (int) (e1.getY() / (getHeight() / items.length));
-        Float nextPosition = NumberUtils.getSafeFloat(actualPositions[row] + (distanceX / itemWidth), items[row].length, items[row].length);
+        Float nextPosition = actualPositions[row] + (distanceX / itemWidth);
+        nextPosition = itemWidth * items[row].length > getWidth()
+                ? NumberUtils.getSafeFloat(actualPositions[row] + (distanceX / itemWidth), items[row].length, items[row].length)
+                : (nextPosition >= 0 && nextPosition <= items[row].length - 1 ? nextPosition : null);
+
         if (nextPosition != null) {
             actualPositions[row] = nextPosition;
             selectedPositions[row] = Math.round(nextPosition);
@@ -383,7 +387,7 @@ public abstract class LinearPickerView<T extends Object> extends View implements
     @Override
     public boolean onTouch(View v, MotionEvent event) {
         gestureDetector.onTouchEvent(event);
-        if (event.getAction() == MotionEvent.ACTION_UP) {
+        if (event.getAction() == MotionEvent.ACTION_UP || event.getAction() == MotionEvent.ACTION_CANCEL) {
             scrollTriggered = false;
             onPositionsChanged(selectedPositions);
         }
