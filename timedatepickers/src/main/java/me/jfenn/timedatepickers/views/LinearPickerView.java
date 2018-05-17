@@ -312,7 +312,7 @@ public abstract class LinearPickerView<T extends Object> extends View implements
                     textSecondaryPaint.setColor(colorAccent);
                 } else {
                     textSecondaryPaint.setColor(textColorSecondary);
-                    textSecondaryPaint.setAlpha((int) (Math.abs(xPos > canvas.getWidth() / 2 ? (canvas.getWidth() - xPos) / (canvas.getWidth() / 2) : (xPos - (xPos < labelWidth + dp[3] ? (xPos > labelWidth ? xPos * (xPos - labelWidth) / dp[3] : xPos) : 0)) / (canvas.getWidth() / 2)) * textSecondaryPaint.getAlpha()));
+                    textSecondaryPaint.setAlpha((int) (Math.abs(xPos > canvas.getWidth() / 2 ? (canvas.getWidth() - xPos) / (canvas.getWidth() / 2) : (xPos - (xPos < labelWidth + dp[5] ? (xPos > labelWidth ? xPos * (xPos - labelWidth) / dp[5] : xPos) : 0)) / (canvas.getWidth() / 2)) * textSecondaryPaint.getAlpha()));
                 }
 
                 canvas.drawText(items[row][col].toString(), xPos, ((startY + endY) / 2) + textOffset, textSecondaryPaint);
