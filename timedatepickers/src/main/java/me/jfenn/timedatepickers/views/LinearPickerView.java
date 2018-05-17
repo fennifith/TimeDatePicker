@@ -13,8 +13,6 @@ import android.view.MotionEvent;
 import android.view.View;
 
 import java.lang.reflect.Array;
-import java.util.ArrayList;
-import java.util.List;
 
 import me.jfenn.timedatepickers.R;
 import me.jfenn.timedatepickers.utils.ConversionUtils;
@@ -405,9 +403,10 @@ public abstract class LinearPickerView<T extends Object> extends View implements
     @Override
     public boolean onTouch(View v, MotionEvent event) {
         gestureDetector.onTouchEvent(event);
-        if (event.getAction() != MotionEvent.ACTION_UP)
+        if (event.getAction() == MotionEvent.ACTION_UP) {
             scrollTriggered = false;
-        else onPositionsChanged(selectedPositions);
+            onPositionsChanged(selectedPositions);
+        }
 
         return false;
     }
