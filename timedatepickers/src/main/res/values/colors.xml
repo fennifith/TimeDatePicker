@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <color name="timedatepicker_colorAccent">#ef5350</color>
+    <color name="timedatepicker_textColorPrimary">#8A000000</color>
+    <color name="timedatepicker_textColorSecondary">#64000000</color>
+    <color name="timedatepicker_colorBackgroundPrimary">#FFFFFF</color>
+    <color name="timedatepicker_colorBackgroundSecondary">#F5F5F5</color>
+
+</resources>

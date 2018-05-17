@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">My Library</string>
+
+    <string name="timedatepickers_hours">Hours</string>
+    <string name="timedatepickers_minutes">Minutes</string>
+    <string name="timedatepickers_year">Year</string>
+    <string name="timedatepickers_month">Month</string>
+    <string name="timedatepickers_day">Day</string>
+</resources>
