@@ -346,10 +346,13 @@ public abstract class LinearPickerView<T extends Object> extends View implements
     @Override
     public boolean onSingleTapUp(MotionEvent e) {
         int row = (int) (e.getY() / (getHeight() / items.length));
-        Float nextPosition = NumberUtils.getSafeFloat(actualPositions[row] + ((e.getX() - (getWidth() / 2)) / itemWidth), items[row].length, items[row].length);
-        if (nextPosition != null) {
+        Float nextPosition = actualPositions[row] + ((e.getX() - (getWidth() / 2)) / (itemWidth + dp[2]));
+        nextPosition = (itemWidth + dp[2]) * items[row].length > getWidth()
+                ? NumberUtils.getSafeFloat(actualPositions[row] + ((e.getX() - (getWidth() / 2)) / (itemWidth + dp[2])), items[row].length, items[row].length)
+                : (nextPosition >= 0 && nextPosition <= items[row].length - 1 ? nextPosition : null);
+        if (nextPosition != null && selectedPositions[row] != Math.round(nextPosition)) {
             selectedPositions[row] = Math.round(nextPosition);
-            actualPositions[row] = selectedPositions[row] - ((e.getX() - (getWidth() / 2)) / itemWidth);
+            actualPositions[row] = selectedPositions[row] - ((e.getX() - (getWidth() / 2)) / (itemWidth + dp[2]));
             scrollTriggered = false;
             postInvalidate();
         }
@@ -364,9 +367,9 @@ public abstract class LinearPickerView<T extends Object> extends View implements
     @Override
     public boolean onScroll(MotionEvent e1, MotionEvent e2, float distanceX, float distanceY) {
         int row = (int) (e1.getY() / (getHeight() / items.length));
-        Float nextPosition = actualPositions[row] + (distanceX / itemWidth);
-        nextPosition = itemWidth * items[row].length > getWidth()
-                ? NumberUtils.getSafeFloat(actualPositions[row] + (distanceX / itemWidth), items[row].length, items[row].length)
+        Float nextPosition = actualPositions[row] + (distanceX / (itemWidth + dp[2]));
+        nextPosition = (itemWidth + dp[2]) * items[row].length > getWidth()
+                ? NumberUtils.getSafeFloat(actualPositions[row] + (distanceX / (itemWidth + dp[2])), items[row].length, items[row].length)
                 : (nextPosition >= 0 && nextPosition <= items[row].length - 1 ? nextPosition : null);
 
         if (nextPosition != null) {
