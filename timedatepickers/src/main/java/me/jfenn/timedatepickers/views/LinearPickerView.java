@@ -30,11 +30,13 @@ public abstract class LinearPickerView<T extends Object> extends View implements
 
     private int colorAccent;
     private int textColorSecondary;
+    private int colorLineAccent;
 
     private T[][] items;
     private String[] labels;
     private int[] selectedPositions;
     private float[] actualPositions;
+    private float[][] actualSelectedPositions;
     private int itemWidth;
 
     private boolean scrollTriggered;
@@ -69,16 +71,16 @@ public abstract class LinearPickerView<T extends Object> extends View implements
         );
 
         colorAccent = ContextCompat.getColor(context, R.color.timedatepicker_colorAccent);
+        colorLineAccent = Color.argb(50, Color.red(colorAccent), Color.green(colorAccent), Color.blue(colorAccent));
         textColorSecondary = ContextCompat.getColor(context, R.color.timedatepicker_textColorSecondary);
 
         lineAccentPaint = new Paint();
         lineAccentPaint.setStyle(Paint.Style.FILL);
-        lineAccentPaint.setColor(colorAccent);
-        lineAccentPaint.setAlpha(50);
+        lineAccentPaint.setColor(colorLineAccent);
 
         accentPaint = new Paint();
         accentPaint.setStyle(Paint.Style.FILL);
-        accentPaint.setColor(Color.BLUE);
+        accentPaint.setColor(colorAccent);
         accentPaint.setAntiAlias(true);
         accentPaint.setDither(true);
 
@@ -145,6 +147,9 @@ public abstract class LinearPickerView<T extends Object> extends View implements
         this.labels = labels;
         this.selectedPositions = selectedPositions;
         actualPositions = new float[selectedPositions.length];
+        actualSelectedPositions = new float[items.length][];
+        for (int row = 0; row < items.length; row++)
+            actualSelectedPositions[row] = new float[items[row].length];
 
         if (!animate) {
             for (int i = 0; i < items.length; i++)
@@ -179,9 +184,16 @@ public abstract class LinearPickerView<T extends Object> extends View implements
         this.items[row] = items;
         labels[row] = label;
         selectedPositions[row] = selectedPosition;
-
-        if (!animate)
+        float[] actualSelectedPositions = new float[items.length];
+        if (animate) {
+            for (int col = 0; col < actualSelectedPositions.length; col++)
+                actualSelectedPositions[col] = this.actualSelectedPositions[row][col % this.actualSelectedPositions[row].length];
+        } else {
             actualPositions[row] = selectedPosition;
+            actualSelectedPositions[selectedPosition] = 1;
+        }
+
+        this.actualSelectedPositions[row] = actualSelectedPositions;
 
         postInvalidate();
     }
@@ -295,20 +307,20 @@ public abstract class LinearPickerView<T extends Object> extends View implements
         int labelWidth = getStringWidth(label, textPrimaryPaint);
 
         canvas.drawRect(0, startY, canvas.getWidth(), endY, backgroundPaint);
-        canvas.drawRect((canvas.getWidth() / 2) - (itemWidth / 2) - dp[1], startY, (canvas.getWidth() / 2) + (itemWidth / 2) + dp[1], endY, lineAccentPaint);
 
         for (int col = 0; col < items[row].length; col++) {
             Float xPos = NumberUtils.getSafeFloat((canvas.getWidth() / 2) + ((col - actualPositions[row]) * (itemWidth + dp[1])), (itemWidth + dp[1]) * items[row].length, canvas.getWidth());
             if (xPos != null) {
-                if (selectedPositions[row] == col) {
-                    textSecondaryPaint.setColor(colorAccent);
-                } else {
-                    textSecondaryPaint.setColor(textColorSecondary);
-                    textSecondaryPaint.setAlpha((int) (Math.abs(xPos > canvas.getWidth() / 2 ? (canvas.getWidth() - xPos) / (canvas.getWidth() / 2) : (xPos - (xPos < labelWidth + dp[5] ? (xPos > labelWidth ? xPos * (xPos - labelWidth) / dp[5] : xPos) : 0)) / (canvas.getWidth() / 2)) * textSecondaryPaint.getAlpha()));
-                }
-
+                textSecondaryPaint.setColor(selectedPositions[row] == col ? colorAccent : textColorSecondary);
+                textSecondaryPaint.setAlpha((int) (Math.abs(xPos > canvas.getWidth() / 2 ? (canvas.getWidth() - xPos) / (canvas.getWidth() / 2) : (xPos - (xPos < labelWidth + dp[5] ? (xPos > labelWidth ? xPos * (xPos - labelWidth) / dp[5] : xPos) : 0)) / (canvas.getWidth() / 2)) * textSecondaryPaint.getAlpha()));
                 canvas.drawText(items[row][col].toString(), xPos, ((startY + endY) / 2) + textOffset, textSecondaryPaint);
+
+                lineAccentPaint.setAlpha((int) (actualSelectedPositions[row][col] * Color.alpha(colorLineAccent)));
+                canvas.drawRect(xPos - (itemWidth / 2) - dp[1], startY, xPos + (itemWidth / 2) + dp[1], endY, lineAccentPaint);
             }
+
+
+            actualSelectedPositions[row][col] = ((actualSelectedPositions[row][col] * 4) + (selectedPositions[row] == col ? 1 : 0)) / 5;
         }
 
         canvas.drawText(label, dp[5], ((startY + endY) / 2) + textOffset, textPrimaryPaint);
