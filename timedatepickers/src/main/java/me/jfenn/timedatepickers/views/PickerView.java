@@ -4,6 +4,7 @@ import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.support.annotation.ColorInt;
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
 import android.util.AttributeSet;
@@ -100,6 +101,71 @@ public abstract class PickerView<T> extends View {
         backgroundSecondaryPaint = new Paint();
         backgroundSecondaryPaint.setStyle(Paint.Style.FILL);
         backgroundSecondaryPaint.setColor(ContextCompat.getColor(context, R.color.timedatepicker_colorBackgroundSecondary));
+    }
+
+    public void setSelectionColor(@ColorInt int accentColor) {
+        setSelectionColor(accentColor, 50);
+    }
+
+    public void setSelectionColor(@ColorInt int accentColor, int dimmedAlpha) {
+        colorAccent = accentColor;
+        accentPaint.setColor(colorAccent);
+        colorLineAccent = Color.argb(dimmedAlpha, Color.red(accentColor), Color.green(accentColor), Color.blue(accentColor));
+        lineAccentPaint.setColor(colorLineAccent);
+        postInvalidate();
+    }
+
+    @ColorInt
+    public int getSelectionColor() {
+        return colorAccent;
+    }
+
+    public void setPrimaryTextColor(@ColorInt int textColor) {
+        textPrimaryPaint.setColor(textColor);
+        postInvalidate();
+    }
+
+    @ColorInt
+    public int getPrimaryTextColor() {
+        return textPrimaryPaint.getColor();
+    }
+
+    public void setSecondaryTextColor(@ColorInt int textColor) {
+        textColorSecondary = textColor;
+        textSecondaryPaint.setColor(textColor);
+        postInvalidate();
+    }
+
+    @ColorInt
+    public int getSecondaryTextColor() {
+        return textColorSecondary;
+    }
+
+    public void setSelectedTextColor(@ColorInt int textColor) {
+        textColorAccent = textColor;
+        textAccentPaint.setColor(textColor);
+        postInvalidate();
+    }
+
+    @ColorInt
+    public int getSelectedTextColor() {
+        return textColorAccent;
+    }
+
+    public void setBackgroundColor(@ColorInt int backgroundColor, @ColorInt int secondaryBackgroundColor) {
+        backgroundPrimaryPaint.setColor(backgroundColor);
+        backgroundSecondaryPaint.setColor(secondaryBackgroundColor);
+        postInvalidate();
+    }
+
+    @ColorInt
+    public int getPrimaryBackgroundColor() {
+        return backgroundPrimaryPaint.getColor();
+    }
+
+    @ColorInt
+    public int getSecondaryBackgroundColor() {
+        return backgroundSecondaryPaint.getColor();
     }
 
     abstract Class getClassType();
