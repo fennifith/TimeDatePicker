@@ -7,5 +7,6 @@
     <color name="timedatepicker_textColorAccent">#FFFFFF</color>
     <color name="timedatepicker_colorBackgroundPrimary">#FFFFFF</color>
     <color name="timedatepicker_colorBackgroundSecondary">#F5F5F5</color>
+    <color name="timedatepicker_dividerColor">#30000000</color>
 
 </resources>

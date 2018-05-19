@@ -113,7 +113,7 @@ public abstract class LinearPickerView<T> extends PickerView<T> implements Gestu
                     canvas,
                     row,
                     labels[row],
-                    (row + 1) % 2 == 0 ? backgroundPrimaryPaint : backgroundSecondaryPaint,
+                    row % 2 == 0 ? backgroundPrimaryPaint : backgroundSecondaryPaint,
                     itemWidth,
                     row * itemHeight,
                     (row + 1) * itemHeight
@@ -164,6 +164,11 @@ public abstract class LinearPickerView<T> extends PickerView<T> implements Gestu
         }
 
         return false;
+    }
+
+    @Override
+    public int getSelectedIndex(int row) {
+        return selectedPositions[row];
     }
 
     @Override

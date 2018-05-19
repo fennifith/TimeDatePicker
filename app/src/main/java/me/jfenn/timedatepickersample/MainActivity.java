@@ -6,6 +6,7 @@ import android.view.View;
 
 import me.jfenn.timedatepickers.dialogs.DateSheetPickerDialog;
 import me.jfenn.timedatepickers.dialogs.TimeSheetPickerDialog;
+import me.jfenn.timedatepickers.views.LinearDatePickerView;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -24,7 +25,9 @@ public class MainActivity extends AppCompatActivity {
         findViewById(R.id.date).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                new DateSheetPickerDialog(MainActivity.this).show();
+                DateSheetPickerDialog dialog = new DateSheetPickerDialog(MainActivity.this);
+                dialog.getView().setItemStyle(LinearDatePickerView.STYLE_BOX);
+                dialog.show();
             }
         });
     }

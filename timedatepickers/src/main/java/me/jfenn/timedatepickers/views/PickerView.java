@@ -35,16 +35,6 @@ public abstract class PickerView<T> extends View {
 
     T[][] items;
     String[] labels;
-    int[] selectedPositions;
-
-    static final int[] dp = new int[]{
-            ConversionUtils.dpToPx(2),
-            ConversionUtils.dpToPx(4),
-            ConversionUtils.dpToPx(6),
-            ConversionUtils.dpToPx(8),
-            ConversionUtils.dpToPx(12),
-            ConversionUtils.dpToPx(16)
-    };
 
     public PickerView(Context context) {
         this(context, null);
@@ -215,9 +205,7 @@ public abstract class PickerView<T> extends View {
 
     public abstract void setSelectedIndex(int row, int column, boolean animate);
 
-    public int getSelectedIndex(int row) {
-        return selectedPositions[row];
-    }
+    public abstract int getSelectedIndex(int row);
 
     @Override
     protected abstract void onDraw(Canvas canvas);
