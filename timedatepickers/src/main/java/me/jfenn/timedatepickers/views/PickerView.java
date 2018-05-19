@@ -37,6 +37,15 @@ public abstract class PickerView<T> extends View {
     T[][] items;
     String[] labels;
 
+    final int[] dp = new int[]{
+            ConversionUtils.dpToPx(2),
+            ConversionUtils.dpToPx(4),
+            ConversionUtils.dpToPx(6),
+            ConversionUtils.dpToPx(8),
+            ConversionUtils.dpToPx(12),
+            ConversionUtils.dpToPx(16)
+    };
+
     public PickerView(Context context) {
         this(context, null);
     }
@@ -170,8 +179,6 @@ public abstract class PickerView<T> extends View {
 
     abstract Class getClassType();
 
-    abstract void onPositionsChanged(int[] positions);
-
     public void setItemStyle(int itemStyle) {
         this.itemStyle = itemStyle;
         postInvalidate();
@@ -196,7 +203,10 @@ public abstract class PickerView<T> extends View {
      * @param selectedPositions an array of the selected positions in each row
      * @param animate whether to animate the switch between attributes
      */
-    public abstract void setAll(T[][] items, String[] labels, int[] selectedPositions, boolean animate);
+    public void setAll(T[][] items, String[] labels, int[] selectedPositions, boolean animate) {
+        this.items = items;
+        this.labels = labels;
+    }
 
     /**
      * Set all the attributes for a single row at once.
@@ -219,7 +229,10 @@ public abstract class PickerView<T> extends View {
      * @param selectedPosition the new selected position of the row
      * @param animate whether to animate the switch between rows
      */
-    public abstract void setRow(int row, T[] items, String label, int selectedPosition, boolean animate);
+    public void setRow(int row, T[] items, String label, int selectedPosition, boolean animate) {
+        this.items[row] = items;
+        labels[row] = label;
+    }
 
     /**
      * Set the value of a single item.
