@@ -9,7 +9,7 @@ import android.widget.LinearLayout;
 
 import me.jfenn.timedatepickers.R;
 
-public abstract class PickerDialog<T extends View> extends AppCompatDialog {
+public abstract class PickerDialog<T extends View> extends AppCompatDialog implements View.OnClickListener {
 
     private T view;
     private int layoutRes;
@@ -38,25 +38,20 @@ public abstract class PickerDialog<T extends View> extends AppCompatDialog {
 
         layout.addView(view, 0);
 
-        findViewById(R.id.ok).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (listener != null)
-                    listener.onSelect(PickerDialog.this, view);
+        findViewById(R.id.ok).setOnClickListener(this);
+        findViewById(R.id.cancel).setOnClickListener(this);
+        findViewById(R.id.root).setOnClickListener(this);
+    }
 
-                dismiss();
-            }
-        });
+    @Override
+    public void onClick(View v) {
+        if (listener != null) {
+            if (v.getId() == R.id.ok)
+                listener.onSelect(this, view);
+            else listener.onCancel(this);
+        }
 
-        findViewById(R.id.cancel).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (listener != null)
-                    listener.onCancel(PickerDialog.this);
-
-                dismiss();
-            }
-        });
+        dismiss();
     }
 
     public T getView() {
