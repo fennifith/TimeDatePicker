@@ -25,6 +25,7 @@ public abstract class LinearPickerView<T> extends PickerView<T> implements Gestu
     private float[] actualPositions;
     private float[][] actualSelectedPositions;
     private int itemWidth;
+    private boolean shouldInvalidate = true;
 
     private boolean scrollTriggered;
 
@@ -123,8 +124,10 @@ public abstract class LinearPickerView<T> extends PickerView<T> implements Gestu
                 shouldInvalidate = true;
         }
 
-        if (shouldInvalidate)
+        if (this.shouldInvalidate || shouldInvalidate)
             postInvalidate();
+
+        this.shouldInvalidate = shouldInvalidate;
     }
 
     private boolean drawItems(Canvas canvas, int row, String label, Paint backgroundPaint, int itemWidth, int startY, int endY) {
