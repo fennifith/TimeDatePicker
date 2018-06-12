@@ -19,8 +19,6 @@ public abstract class LinearPickerView<T> extends PickerView<T> implements Gestu
     public static final int STYLE_CIRCLE = 0;
     public static final int STYLE_BOX = 1;
 
-    private T[][] items;
-    private String[] labels;
     private int[] selectedPositions;
     private float[] actualPositions;
     private float[][] actualSelectedPositions;
@@ -30,15 +28,6 @@ public abstract class LinearPickerView<T> extends PickerView<T> implements Gestu
     private boolean scrollTriggered;
 
     private GestureDetector gestureDetector;
-
-    private final int[] dp = new int[]{
-            ConversionUtils.dpToPx(2),
-            ConversionUtils.dpToPx(4),
-            ConversionUtils.dpToPx(6),
-            ConversionUtils.dpToPx(8),
-            ConversionUtils.dpToPx(12),
-            ConversionUtils.dpToPx(16)
-    };
 
     public LinearPickerView(Context context) {
         this(context, null);
@@ -59,8 +48,8 @@ public abstract class LinearPickerView<T> extends PickerView<T> implements Gestu
 
     @Override
     public void setAll(T[][] items, String[] labels, int[] selectedPositions, boolean animate) {
-        this.items = items;
-        this.labels = labels;
+        super.setAll(items, labels, selectedPositions, animate);
+
         this.selectedPositions = selectedPositions;
         actualPositions = new float[selectedPositions.length];
         actualSelectedPositions = new float[items.length][];
@@ -77,8 +66,7 @@ public abstract class LinearPickerView<T> extends PickerView<T> implements Gestu
 
     @Override
     public void setRow(int row, T[] items, String label, int selectedPosition, boolean animate) {
-        this.items[row] = items;
-        labels[row] = label;
+        super.setRow(row, items, label, selectedPosition, animate);
         selectedPositions[row] = selectedPosition;
         float[] actualSelectedPositions = new float[items.length];
         if (animate) {
@@ -245,4 +233,7 @@ public abstract class LinearPickerView<T> extends PickerView<T> implements Gestu
 
         return false;
     }
+
+    abstract void onPositionsChanged(int[] selectedPositions);
+
 }
