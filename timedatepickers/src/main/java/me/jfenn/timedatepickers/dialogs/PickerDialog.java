@@ -58,7 +58,7 @@ public abstract class PickerDialog<T extends View> extends AppCompatDialog imple
         return view;
     }
 
-    private interface OnSelectedListener<T extends View> {
+    public interface OnSelectedListener<T extends View> {
         void onSelect(PickerDialog<T> dialog, T view);
         void onCancel(PickerDialog<T> dialog);
     }
