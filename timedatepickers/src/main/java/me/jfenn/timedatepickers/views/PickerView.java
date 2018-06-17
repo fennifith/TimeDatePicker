@@ -108,6 +108,7 @@ public abstract class PickerView<T> extends View implements Themable {
         backgroundPrimaryPaint = new Paint();
         backgroundPrimaryPaint.setStyle(Paint.Style.FILL);
         backgroundPrimaryPaint.setColor(ContextCompat.getColor(context, R.color.timedatepicker_colorBackgroundPrimary));
+        setBackgroundColor(backgroundPrimaryPaint.getColor());
 
         backgroundSecondaryPaint = new Paint();
         backgroundSecondaryPaint.setStyle(Paint.Style.FILL);
