@@ -5,7 +5,9 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatDialog;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import me.jfenn.timedatepickers.R;
 import me.jfenn.timedatepickers.interfaces.Themable;
@@ -15,6 +17,10 @@ public abstract class PickerDialog<T extends View & Themable> extends AppCompatD
     private T view;
     private int layoutRes;
     private OnSelectedListener<T> listener;
+
+    private LinearLayout layout;
+    private ImageView cancelImage, okImage;
+    private TextView cancelText, okText;
 
     public PickerDialog(Context context, T view, int layoutRes) {
         super(context, R.style.TimeDatePickers_Dialog_BottomSheet);
@@ -32,7 +38,8 @@ public abstract class PickerDialog<T extends View & Themable> extends AppCompatD
         super.onCreate(savedInstanceState);
         setContentView(layoutRes);
 
-        LinearLayout layout = findViewById(R.id.layout);
+        layout = findViewById(R.id.layout);
+        layout.setBackgroundColor(getBackgroundColor());
 
         if (view.getParent() != null && view.getParent() instanceof ViewGroup)
             ((ViewGroup) view.getParent()).removeView(view);
@@ -42,6 +49,16 @@ public abstract class PickerDialog<T extends View & Themable> extends AppCompatD
         findViewById(R.id.ok).setOnClickListener(this);
         findViewById(R.id.cancel).setOnClickListener(this);
         findViewById(R.id.root).setOnClickListener(this);
+
+        cancelImage = findViewById(R.id.cancelImage);
+        cancelText = findViewById(R.id.cancelText);
+        cancelImage.setColorFilter(getPrimaryTextColor());
+        cancelText.setTextColor(getPrimaryTextColor());
+
+        okImage = findViewById(R.id.okImage);
+        okText = findViewById(R.id.okText);
+        okImage.setColorFilter(getSelectionColor());
+        okText.setTextColor(getSelectionColor());
     }
 
     @Override
@@ -61,6 +78,12 @@ public abstract class PickerDialog<T extends View & Themable> extends AppCompatD
 
     @Override
     public void setSelectionColor(int color) {
+        if (cancelImage != null)
+            cancelImage.setColorFilter(color);
+
+        if (cancelText != null)
+            cancelText.setTextColor(color);
+
         view.setSelectionColor(color);
     }
 
@@ -81,6 +104,12 @@ public abstract class PickerDialog<T extends View & Themable> extends AppCompatD
 
     @Override
     public void setPrimaryTextColor(int color) {
+        if (cancelImage != null)
+            cancelImage.setColorFilter(color);
+
+        if (cancelText != null)
+            cancelText.setTextColor(color);
+
         view.setPrimaryTextColor(color);
     }
 
@@ -101,6 +130,9 @@ public abstract class PickerDialog<T extends View & Themable> extends AppCompatD
 
     @Override
     public void setBackgroundColor(int color) {
+        if (layout != null)
+            layout.setBackgroundColor(color);
+
         view.setBackgroundColor(color);
     }
 
