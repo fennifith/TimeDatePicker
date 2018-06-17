@@ -13,9 +13,10 @@ import android.view.View;
 import java.lang.reflect.Array;
 
 import me.jfenn.timedatepickers.R;
+import me.jfenn.timedatepickers.interfaces.Themable;
 import me.jfenn.timedatepickers.utils.ConversionUtils;
 
-public abstract class PickerView<T> extends View {
+public abstract class PickerView<T> extends View implements Themable {
 
     public static final int STYLE_CIRCLE = 0;
     public static final int STYLE_BOX = 1;
@@ -112,8 +113,9 @@ public abstract class PickerView<T> extends View {
         backgroundSecondaryPaint.setColor(ContextCompat.getColor(context, R.color.timedatepicker_colorBackgroundSecondary));
     }
 
-    public void setSelectionColor(@ColorInt int accentColor) {
-        setSelectionColor(accentColor, 50);
+    @Override
+    public void setSelectionColor(int color) {
+        setSelectionColor(color, 50);
     }
 
     public void setSelectionColor(@ColorInt int accentColor, int dimmedAlpha) {
@@ -124,9 +126,21 @@ public abstract class PickerView<T> extends View {
         postInvalidate();
     }
 
-    @ColorInt
+    @Override
     public int getSelectionColor() {
         return colorAccent;
+    }
+
+    @Override
+    public void setSelectionTextColor(int color) {
+        textColorAccent = color;
+        textAccentPaint.setColor(color);
+        postInvalidate();
+    }
+
+    @Override
+    public int getSelectionTextColor() {
+        return textColorAccent;
     }
 
     public void setPrimaryTextColor(@ColorInt int textColor) {
@@ -134,45 +148,52 @@ public abstract class PickerView<T> extends View {
         postInvalidate();
     }
 
-    @ColorInt
+    @Override
     public int getPrimaryTextColor() {
         return textPrimaryPaint.getColor();
     }
 
+    @Override
     public void setSecondaryTextColor(@ColorInt int textColor) {
         textColorSecondary = textColor;
         textSecondaryPaint.setColor(textColor);
         postInvalidate();
     }
 
-    @ColorInt
+    @Override
     public int getSecondaryTextColor() {
         return textColorSecondary;
     }
 
-    public void setSelectedTextColor(@ColorInt int textColor) {
-        textColorAccent = textColor;
-        textAccentPaint.setColor(textColor);
+    @Override
+    public void setBackgroundColor(int color) {
+        setPrimaryBackgroundColor(color);
+        setSecondaryBackgroundColor(color);
+    }
+
+    @Override
+    public int getBackgroundColor() {
+        return getPrimaryBackgroundColor();
+    }
+
+    @Override
+    public void setPrimaryBackgroundColor(int color) {
+        backgroundPrimaryPaint.setColor(color);
         postInvalidate();
     }
 
-    @ColorInt
-    public int getSelectedTextColor() {
-        return textColorAccent;
-    }
-
-    public void setBackgroundColor(@ColorInt int backgroundColor, @ColorInt int secondaryBackgroundColor) {
-        backgroundPrimaryPaint.setColor(backgroundColor);
-        backgroundSecondaryPaint.setColor(secondaryBackgroundColor);
-        postInvalidate();
-    }
-
-    @ColorInt
+    @Override
     public int getPrimaryBackgroundColor() {
         return backgroundPrimaryPaint.getColor();
     }
 
-    @ColorInt
+    @Override
+    public void setSecondaryBackgroundColor(int color) {
+        backgroundSecondaryPaint.setColor(color);
+        postInvalidate();
+    }
+
+    @Override
     public int getSecondaryBackgroundColor() {
         return backgroundSecondaryPaint.getColor();
     }
