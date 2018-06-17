@@ -8,8 +8,9 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
 import me.jfenn.timedatepickers.R;
+import me.jfenn.timedatepickers.interfaces.Themable;
 
-public abstract class PickerDialog<T extends View> extends AppCompatDialog implements View.OnClickListener {
+public abstract class PickerDialog<T extends View & Themable> extends AppCompatDialog implements Themable, View.OnClickListener {
 
     private T view;
     private int layoutRes;
@@ -58,7 +59,77 @@ public abstract class PickerDialog<T extends View> extends AppCompatDialog imple
         return view;
     }
 
-    public interface OnSelectedListener<T extends View> {
+    @Override
+    public void setSelectionColor(int color) {
+        view.setSelectionColor(color);
+    }
+
+    @Override
+    public int getSelectionColor() {
+        return view.getSelectionColor();
+    }
+
+    @Override
+    public void setSelectionTextColor(int color) {
+        view.setSelectionTextColor(color);
+    }
+
+    @Override
+    public int getSelectionTextColor() {
+        return view.getSelectionTextColor();
+    }
+
+    @Override
+    public void setPrimaryTextColor(int color) {
+        view.setPrimaryTextColor(color);
+    }
+
+    @Override
+    public int getPrimaryTextColor() {
+        return view.getPrimaryTextColor();
+    }
+
+    @Override
+    public void setSecondaryTextColor(int color) {
+        view.setSecondaryTextColor(color);
+    }
+
+    @Override
+    public int getSecondaryTextColor() {
+        return view.getSecondaryTextColor();
+    }
+
+    @Override
+    public void setBackgroundColor(int color) {
+        view.setBackgroundColor(color);
+    }
+
+    @Override
+    public int getBackgroundColor() {
+        return view.getBackgroundColor();
+    }
+
+    @Override
+    public void setPrimaryBackgroundColor(int color) {
+        view.setPrimaryBackgroundColor(color);
+    }
+
+    @Override
+    public int getPrimaryBackgroundColor() {
+        return view.getPrimaryBackgroundColor();
+    }
+
+    @Override
+    public void setSecondaryBackgroundColor(int color) {
+        view.setSecondaryBackgroundColor(color);
+    }
+
+    @Override
+    public int getSecondaryBackgroundColor() {
+        return view.getSecondaryBackgroundColor();
+    }
+
+    public interface OnSelectedListener<T extends View & Themable> {
         void onSelect(PickerDialog<T> dialog, T view);
         void onCancel(PickerDialog<T> dialog);
     }

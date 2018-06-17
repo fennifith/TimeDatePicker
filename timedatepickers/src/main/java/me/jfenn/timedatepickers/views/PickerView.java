@@ -4,6 +4,7 @@ import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.graphics.drawable.ColorDrawable;
 import android.support.annotation.ColorInt;
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
@@ -167,13 +168,12 @@ public abstract class PickerView<T> extends View implements Themable {
 
     @Override
     public void setBackgroundColor(int color) {
-        setPrimaryBackgroundColor(color);
-        setSecondaryBackgroundColor(color);
+        super.setBackgroundColor(color);
     }
 
     @Override
     public int getBackgroundColor() {
-        return getPrimaryBackgroundColor();
+        return getBackground() instanceof ColorDrawable ? ((ColorDrawable) getBackground()).getColor() : Color.TRANSPARENT;
     }
 
     @Override
