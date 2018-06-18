@@ -4,7 +4,6 @@ import android.content.Context;
 import android.support.annotation.Nullable;
 import android.text.format.DateFormat;
 import android.util.AttributeSet;
-import android.widget.TimePicker;
 
 import java.util.Calendar;
 
@@ -35,7 +34,7 @@ public class LinearTimePickerView extends LinearPickerView<Object> {
                 context.getString(R.string.timedatepickers_minutes),
                 ""
         }, new int[]{
-                now.get(Calendar.HOUR_OF_DAY) % (DateFormat.is24HourFormat(context) ? 24 : 12),
+                (now.get(Calendar.HOUR_OF_DAY) - 1) % (DateFormat.is24HourFormat(context) ? 24 : 12),
                 now.get(Calendar.MINUTE),
                 now.get(Calendar.HOUR_OF_DAY) >= 12 ? 1 : 0
         });
@@ -59,15 +58,18 @@ public class LinearTimePickerView extends LinearPickerView<Object> {
     public void setTime(int hourOfDay, int minute) {
         setSelectedIndex(1, minute);
         if (DateFormat.is24HourFormat(getContext())) {
-            setSelectedIndex(0, hourOfDay % 12);
+            setSelectedIndex(0, (hourOfDay - 1) % 12);
             setSelectedIndex(2, hourOfDay >= 12 && hourOfDay < 24 ? 1 : 0);
-        } else setSelectedIndex(0, hourOfDay);
+        } else setSelectedIndex(0, hourOfDay - 1);
 
         postInvalidate();
     }
 
     public int getHourOfDay() {
-        return getSelectedIndex(0) + (DateFormat.is24HourFormat(getContext()) ? getSelectedIndex(2) * 12 : 0);
+        int hour = getSelectedIndex(0) + 1;
+        if (DateFormat.is24HourFormat(getContext()))
+            return hour;
+        else return getSelectedIndex(2) == 0 ? hour % 12 : hour + 12;
     }
 
     public int getMinute() {

@@ -3,10 +3,13 @@ package me.jfenn.timedatepickersample;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.widget.Toast;
 
 import me.jfenn.timedatepickers.dialogs.DateSheetPickerDialog;
+import me.jfenn.timedatepickers.dialogs.PickerDialog;
 import me.jfenn.timedatepickers.dialogs.TimeSheetPickerDialog;
 import me.jfenn.timedatepickers.views.LinearDatePickerView;
+import me.jfenn.timedatepickers.views.LinearTimePickerView;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -18,7 +21,18 @@ public class MainActivity extends AppCompatActivity {
         findViewById(R.id.time).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                new TimeSheetPickerDialog(MainActivity.this).show();
+                new TimeSheetPickerDialog(MainActivity.this)
+                        .setListener(new PickerDialog.OnSelectedListener<LinearTimePickerView>() {
+                            @Override
+                            public void onSelect(PickerDialog<LinearTimePickerView> dialog, LinearTimePickerView view) {
+                                Toast.makeText(MainActivity.this, view.getHourOfDay() + ":" + view.getMinute(), Toast.LENGTH_SHORT).show();
+                            }
+
+                            @Override
+                            public void onCancel(PickerDialog<LinearTimePickerView> dialog) {
+                            }
+                        })
+                        .show();
             }
         });
 
