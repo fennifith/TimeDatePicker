@@ -78,11 +78,11 @@ public abstract class PickerDialog<T extends View & Themable> extends AppCompatD
 
     @Override
     public void setSelectionColor(int color) {
-        if (cancelImage != null)
-            cancelImage.setColorFilter(color);
+        if (okImage != null)
+            okImage.setColorFilter(color);
 
-        if (cancelText != null)
-            cancelText.setTextColor(color);
+        if (okText != null)
+            okText.setTextColor(color);
 
         view.setSelectionColor(color);
     }
