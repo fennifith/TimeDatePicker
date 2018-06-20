@@ -94,7 +94,7 @@ public abstract class LinearPickerView<T> extends PickerView<T> implements Gestu
 
     @Override
     protected void onDraw(Canvas canvas) {
-        itemWidth = Math.max((canvas.getHeight() / 2) - dp[4], StringUtils.getMaxStringWidth(items, textPrimaryPaint));
+        itemWidth = Math.max((canvas.getHeight() / 2), StringUtils.getMaxStringWidth(items, textPrimaryPaint)) - dp[4];
         int itemHeight = canvas.getHeight() / items.length;
         boolean shouldInvalidate = false;
         for (int row = 0; row < items.length; row++) {

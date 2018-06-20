@@ -57,10 +57,12 @@ public class LinearTimePickerView extends LinearPickerView<Object> {
 
     public void setTime(int hourOfDay, int minute) {
         setSelectedIndex(1, minute);
-        if (DateFormat.is24HourFormat(getContext())) {
+        if (DateFormat.is24HourFormat(getContext()))
+            setSelectedIndex(0, hourOfDay - 1);
+        else {
             setSelectedIndex(0, (hourOfDay - 1) % 12);
             setSelectedIndex(2, hourOfDay >= 12 && hourOfDay < 24 ? 1 : 0);
-        } else setSelectedIndex(0, hourOfDay - 1);
+        }
 
         postInvalidate();
     }
