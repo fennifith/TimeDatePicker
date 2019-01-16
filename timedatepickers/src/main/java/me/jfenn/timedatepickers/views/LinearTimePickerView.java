@@ -55,6 +55,14 @@ public class LinearTimePickerView extends LinearPickerView<Object> {
             listener.onTimeChanged(getHourOfDay(), getMinute());
     }
 
+	/**
+	 * Set the selected time of the picker.
+	 * 
+	 * @param hourOfDay			The hour of the day. Probably somewhere
+	 * 							between 1 and 24. The next hour after 24
+	 *							is 1.
+	 * @param minute			The minute of the hour. Between 0 and 59.
+	 */
     public void setTime(int hourOfDay, int minute) {
         setSelectedIndex(1, minute);
         if (DateFormat.is24HourFormat(getContext()))
@@ -67,6 +75,13 @@ public class LinearTimePickerView extends LinearPickerView<Object> {
         postInvalidate();
     }
 
+	/**
+	 * Get the selected hour. Between 1 and 24. The next hour after 24
+	 * is 1. Doesn't care whether the format is 12 or 24 hour, because
+	 * honestly they're going to occur at the same time either way.
+	 * 
+	 * @return The currently selected hour.
+	 */
     public int getHourOfDay() {
         int hour = getSelectedIndex(0) + 1;
         if (DateFormat.is24HourFormat(getContext()))
@@ -74,6 +89,12 @@ public class LinearTimePickerView extends LinearPickerView<Object> {
         else return getSelectedIndex(2) == 0 ? hour % 12 : hour + 12;
     }
 
+	/**
+	 * Get the selected minute. Between 0 and 59. The next minute after
+	 * 59 is 0.
+	 * 
+	 * @return The currently selected minute.
+	 */
     public int getMinute() {
         return getSelectedIndex(1);
     }

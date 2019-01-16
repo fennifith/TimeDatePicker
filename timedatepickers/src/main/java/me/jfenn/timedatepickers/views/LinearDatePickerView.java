@@ -70,18 +70,50 @@ public class LinearDatePickerView extends LinearPickerView<Object> {
             listener.onDateChanged(getYear(), getMonth(), getDay());
     }
 
+	/**
+	 * Obtain the currently selected year.
+	 * 
+	 * @return An integer representing the currently selected
+	 * 			year, e.x. the year 2019 would return "2019".
+	 */
     public int getYear() {
         return yearStart + getSelectedIndex(0);
     }
 
+	/**
+	 * Obtain the currently selected month.
+	 * 
+	 * @return An integer representing the currently selected
+	 * 			month, e.x. the month "February" would return "2".
+	 */
     public int getMonth() {
         return getSelectedIndex(1);
     }
 
+	/**
+	 * Obtain the currently selected day.
+	 * 
+	 * @return An integer representing the currently selected
+	 * 			day, e.x. the 31st would return "31".
+	 */
     public int getDay() {
         return getSelectedIndex(0) + 1;
     }
 
+	/**
+	 * Set the currently selected date of the picker. Because
+	 * reasons, the year must only be +/- 50 years from the
+	 * current date. This normally should not be an issue, as
+	 * any software written today will likely be obsolete within
+	 * that amount of time anyway.
+	 * 
+	 * @param year			An integer representing the
+	 * 						selected year.
+	 * @param month			An integer representing the
+	 * 						selected month.
+	 * @param day			An integer representing the
+	 * 						selected day.
+	 */
     public void setDate(int year, int month, int day) {
         setSelectedIndex(0, year - yearStart);
         setSelectedIndex(1, month);

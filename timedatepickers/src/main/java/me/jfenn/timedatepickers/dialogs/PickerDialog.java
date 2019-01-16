@@ -28,6 +28,13 @@ public abstract class PickerDialog<T extends View & Themable> extends AppCompatD
         this.layoutRes = layoutRes;
     }
 
+	/**
+	 * Set the listener to invoke when an action occurs in the
+	 * picker.
+	 * 
+	 * @param listener		The listener to invoke.
+	 * @return				"this", for method chaining.
+	 */
     public PickerDialog<T> setListener(OnSelectedListener<T> listener) {
         this.listener = listener;
         return this;
@@ -72,6 +79,12 @@ public abstract class PickerDialog<T extends View & Themable> extends AppCompatD
         dismiss();
     }
 
+	/**
+	 * Obtain the picker view/"widget" being used by the
+	 * dialog.
+	 * 
+	 * @return The picker view being used by the dialog.
+	 */
     public T getView() {
         return view;
     }
