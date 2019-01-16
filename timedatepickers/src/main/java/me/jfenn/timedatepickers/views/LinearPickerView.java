@@ -4,12 +4,12 @@ import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
-import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.View;
 
+import androidx.annotation.Nullable;
 import me.jfenn.timedatepickers.utils.ConversionUtils;
 import me.jfenn.timedatepickers.utils.NumberUtils;
 import me.jfenn.timedatepickers.utils.StringUtils;

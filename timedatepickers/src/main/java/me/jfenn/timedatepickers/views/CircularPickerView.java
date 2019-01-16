@@ -2,8 +2,9 @@ package me.jfenn.timedatepickers.views;
 
 import android.content.Context;
 import android.graphics.Canvas;
-import android.support.annotation.Nullable;
 import android.util.AttributeSet;
+
+import androidx.annotation.Nullable;
 
 public abstract class CircularPickerView<T> extends PickerView<T> {
 

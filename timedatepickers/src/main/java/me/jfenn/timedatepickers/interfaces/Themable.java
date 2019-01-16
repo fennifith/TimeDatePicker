@@ -1,6 +1,6 @@
 package me.jfenn.timedatepickers.interfaces;
 
-import android.support.annotation.ColorInt;
+import androidx.annotation.ColorInt;
 
 public interface Themable {
     void setSelectionColor(@ColorInt int color);

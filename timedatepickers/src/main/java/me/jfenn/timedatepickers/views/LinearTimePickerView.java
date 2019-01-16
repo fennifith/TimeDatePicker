@@ -1,12 +1,12 @@
 package me.jfenn.timedatepickers.views;
 
 import android.content.Context;
-import android.support.annotation.Nullable;
 import android.text.format.DateFormat;
 import android.util.AttributeSet;
 
 import java.util.Calendar;
 
+import androidx.annotation.Nullable;
 import me.jfenn.timedatepickers.R;
 import me.jfenn.timedatepickers.utils.NumberUtils;
 
